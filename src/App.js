@@ -35,10 +35,10 @@ function App() {
             <a href="#" className="hover:text-blue-400">
               Home
             </a>
-            <a href="#" className="hover:text-blue-400">
+            <a href="#inventory" className="hover:text-blue-400">
               Inventory
             </a>
-            <a href="#" className="hover:text-blue-400">
+            <a href="mailto:govfleetmotors@gmail.com" className="hover:text-blue-400">
               Contact
             </a>
           </nav>
@@ -102,10 +102,55 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1e2a38] text-gray-300 text-center py-6">
-        <p className="text-sm">
+      <footer className="bg-[#1e2a38] text-gray-300 py-10">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+          {/* Column 1 */}
+          <div>
+            <h4 className="text-white font-semibold text-lg mb-3">
+              GovFleet Motors
+            </h4>
+            <p>Premium Used California Government Owned Fleet Vehicles</p>
+          </div>
+
+          {/* Column 2 */}
+          <div>
+            <h4 className="text-white font-semibold text-lg mb-3">Contact</h4>
+            <p>1215 W. Imperial Hwy #221</p>
+            <p>Brea, CA 92821</p>
+            <p>
+              Phone:{" "}
+              <a
+                href="tel:+17142693483"
+                className="text-blue-400 hover:underline"
+              >
+                (714) 269-3483
+              </a>
+            </p>
+            <p>
+              Email:{" "}
+              <a
+                href="mailto:govfleetmotors@gmail.com"
+                className="text-blue-400 hover:underline"
+              >
+                govfleetmotors@gmail.com
+              </a>
+            </p>
+          </div>
+
+          {/* Column 3 */}
+          <div>
+            <h4 className="text-white font-semibold text-lg mb-3">About</h4>
+            <p>
+              Specializing in premium, fleet-maintained vehicles from trusted
+              California government sources. Reliable. Transparent.
+              Professional.
+            </p>
+          </div>
+        </div>
+
+        <div className="border-t border-gray-700 mt-8 pt-4 text-center text-gray-400 text-xs">
           © {new Date().getFullYear()} GovFleet Motors. All rights reserved.
-        </p>
+        </div>
       </footer>
     </div>
   );
