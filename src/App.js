@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -65,6 +65,18 @@ const MOCK_INVENTORY = [
 // --- Lightbox Component ---
 function Lightbox({ images, currentIndex, onClose }) {
   const [index, setIndex] = useState(currentIndex);
+  const [touchStart, setTouchStart] = useState(0);
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowRight") showNext(e);
+      if (e.key === "ArrowLeft") showPrev(e);
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  });
 
   const showNext = (e) => {
     e.stopPropagation();
@@ -76,25 +88,54 @@ function Lightbox({ images, currentIndex, onClose }) {
     setIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  const handleTouchStart = (e) => setTouchStart(e.touches[0].clientX);
+
+  const handleTouchMove = (e) => {
+    if (!touchStart) return;
+    const touchEnd = e.touches[0].clientX;
+    const diff = touchStart - touchEnd;
+    if (diff > 50) showNext(e);
+    if (diff < -50) showPrev(e);
+    setTouchStart(0);
+  };
+
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
       onClick={onClose}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
     >
+      {/* Close Button */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
+        className="absolute top-6 right-8 text-white text-3xl font-bold hover:text-gray-300"
+      >
+        ×
+      </button>
+
+      {/* Prev Arrow */}
       <button
         onClick={showPrev}
-        className="absolute left-5 text-white text-4xl font-bold"
+        className="absolute left-5 text-blue-500 text-5xl font-bold hover:text-blue-400 select-none"
       >
         ‹
       </button>
+
+      {/* Image */}
       <img
         src={images[index]}
         alt="Vehicle"
-        className="max-h-[90vh] max-w-[90vw] rounded shadow-lg"
+        className="max-h-[90vh] max-w-[90vw] rounded shadow-lg object-contain"
       />
+
+      {/* Next Arrow */}
       <button
         onClick={showNext}
-        className="absolute right-5 text-white text-4xl font-bold"
+        className="absolute right-5 text-blue-500 text-5xl font-bold hover:text-blue-400 select-none"
       >
         ›
       </button>
@@ -117,7 +158,9 @@ function VehicleDetail() {
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4 text-center">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</h1>
+      <h1 className="text-3xl font-bold mb-4 text-center">
+        {`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
+      </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {vehicle.images.map((src, i) => (
           <img
