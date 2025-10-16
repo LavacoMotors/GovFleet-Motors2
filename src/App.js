@@ -1,156 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import SplashScreen from "./SplashScreen";
 
 function App() {
-  const vehicles = [
-    {
-      id: 1,
-      title: "2005 Chevrolet Silverado 2500HD Service Truck",
-      price: "$6,000",
-      miles: "164,000",
-      location: "Brea, CA",
-      image:
-        "https://raw.githubusercontent.com/LavacoMotors/GovFleet-Motors2/refs/heads/main/public/images/2005-chevrolet-silverado-2500HD/1.jpeg",
-    },
-  ];
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <SplashScreen onFinish={() => setLoading(false)} />;
+  }
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800">
+    <div className="bg-gray-50 min-h-screen">
       {/* Header */}
-      <header className="bg-[#1e2a38] text-white shadow-lg">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-          <div className="flex items-center space-x-3">
-            <img
-              src="https://raw.githubusercontent.com/LavacoMotors/GovFleet-Motors2/main/public/logo.png"
-              alt="GovFleet Motors"
-              className="h-10 w-auto"
-            />
-            <div>
-              <h1 className="text-xl font-bold">GovFleet Motors</h1>
-              <p className="text-sm text-gray-300">
-                Premium Used Government Fleet Vehicles
-              </p>
-            </div>
-          </div>
-          <nav className="space-x-6 text-sm font-semibold">
-            <a href="#" className="hover:text-blue-400">
-              Home
-            </a>
-            <a href="#inventory" className="hover:text-blue-400">
-              Inventory
-            </a>
-            <a href="mailto:govfleetmotors@gmail.com" className="hover:text-blue-400">
-              Contact
-            </a>
-          </nav>
+      <header className="bg-[#1e2a38] text-white p-4 flex justify-between items-center">
+        <div className="flex items-center space-x-2">
+          <img src="/logo.png" alt="GovFleet Motors Logo" className="w-8 h-8" />
+          <h1 className="font-bold text-lg">GovFleet Motors</h1>
         </div>
+        <nav className="space-x-4">
+          <a href="/" className="hover:text-gray-300">Home</a>
+          <a href="/inventory" className="hover:text-gray-300">Inventory</a>
+          <a href="/contact" className="hover:text-gray-300">Contact</a>
+        </nav>
       </header>
 
       {/* Hero Section */}
-      <section
-        className="bg-cover bg-center text-white"
-        style={{
-          backgroundImage:
-            "url('https://raw.githubusercontent.com/LavacoMotors/GovFleet-Motors2/main/public/flag-bg.png')",
-        }}
-      >
-        <div className="bg-black bg-opacity-60 py-24 text-center">
-          <h2 className="text-4xl font-bold mb-4 tracking-tight">
-            Premium Used California Government Owned Fleet Vehicles
-          </h2>
-          <p className="text-gray-200 mb-8 text-lg">
-            Trusted, fleet-maintained vehicles — inspected, serviced, and ready
-            for work.
-          </p>
-          <a
-            href="#inventory"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold shadow-lg transition"
-          >
-            Browse Inventory
-          </a>
-        </div>
+      <section className="bg-gray-700 text-white text-center py-20">
+        <h2 className="text-3xl font-bold mb-4">
+          Premium Used California Government Owned Fleet Vehicles
+        </h2>
+        <p className="mb-6">
+          Trusted, fleet-maintained vehicles — inspected, serviced, and ready for work.
+        </p>
+        <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded">
+          Browse Inventory
+        </button>
       </section>
 
-      {/* Featured Inventory Section */}
-      <section id="inventory" className="max-w-7xl mx-auto py-16 px-6">
-        <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-          Featured Inventory
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {vehicles.map((v) => (
-            <div
-              key={v.id}
-              className="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition duration-300"
-            >
-              <img
-                src={v.image}
-                alt={v.title}
-                className="w-full h-56 object-cover"
-              />
-              <div className="p-6">
-                <h4 className="text-lg font-semibold mb-2">{v.title}</h4>
-                <p className="text-gray-600">{v.miles} miles</p>
-                <p className="text-gray-600">{v.location}</p>
-                <p className="text-blue-600 font-bold text-lg mt-2">{v.price}</p>
-                <button className="mt-4 bg-gray-900 hover:bg-blue-600 text-white px-4 py-2 rounded-lg w-full font-semibold transition">
-                  View Details
-                </button>
-              </div>
-            </div>
-          ))}
+      {/* Featured Inventory */}
+      <section className="py-10 px-6 text-center">
+        <h3 className="text-2xl font-semibold mb-6">Featured Inventory</h3>
+        <div className="flex justify-center">
+          <div className="bg-white rounded-lg shadow-md p-4 max-w-xs">
+            <img
+              src="https://raw.githubusercontent.com/LavacoMotors/GovFleet-Motors2/refs/heads/main/public/images/2005-chevrolet-silverado-2500HD/1.jpeg"
+              alt="2005 Chevrolet Silverado 2500HD"
+              className="rounded mb-3"
+            />
+            <h4 className="font-semibold text-lg">
+              2005 Chevrolet Silverado 2500HD Service Truck
+            </h4>
+            <p className="text-gray-600 text-sm mt-1">164,000 miles</p>
+            <p className="text-gray-600 text-sm">Brea, CA</p>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1e2a38] text-gray-300 py-10">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
-          {/* Column 1 */}
-          <div>
-            <h4 className="text-white font-semibold text-lg mb-3">
-              GovFleet Motors
-            </h4>
-            <p>Premium Used California Government Owned Fleet Vehicles</p>
-          </div>
-
-          {/* Column 2 */}
-          <div>
-            <h4 className="text-white font-semibold text-lg mb-3">Contact</h4>
-            <p>1215 W. Imperial Hwy #221</p>
-            <p>Brea, CA 92821</p>
-            <p>
-              Phone:{" "}
-              <a
-                href="tel:+17142693483"
-                className="text-blue-400 hover:underline"
-              >
-                (714) 269-3483
-              </a>
-            </p>
-            <p>
-              Email:{" "}
-              <a
-                href="mailto:govfleetmotors@gmail.com"
-                className="text-blue-400 hover:underline"
-              >
-                govfleetmotors@gmail.com
-              </a>
-            </p>
-          </div>
-
-          {/* Column 3 */}
-          <div>
-            <h4 className="text-white font-semibold text-lg mb-3">About</h4>
-            <p>
-              Specializing in premium, fleet-maintained vehicles from trusted
-              California government sources. Reliable. Transparent.
-              Professional.
-            </p>
-          </div>
-        </div>
-
-        <div className="border-t border-gray-700 mt-8 pt-4 text-center text-gray-400 text-xs">
-          © {new Date().getFullYear()} GovFleet Motors. All rights reserved.
-        </div>
+      <footer className="bg-[#1e2a38] text-gray-300 py-6 text-center text-sm">
+        <p>© {new Date().getFullYear()} GovFleet Motors. All Rights Reserved.</p>
+        <p>1215 W. Imperial Hwy #221, Brea, CA 92821 | (714) 269-3483</p>
       </footer>
     </div>
   );
