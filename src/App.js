@@ -1,6 +1,14 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useParams,
+  useNavigate,
+} from "react-router-dom";
 
+// --- Mock Inventory Data ---
 const MOCK_INVENTORY = [
   {
     id: "chevy2500-2005",
@@ -14,10 +22,10 @@ const MOCK_INVENTORY = [
     fuel: "Gasoline",
     transmission: "Automatic",
     images: [
-      "https://raw.githubusercontent.com/LavacoMotors/GovFleet-Motors2/refs/heads/main/public/images/2005-chevrolet-silverado-2500HD/1.jpeg",
-      "https://raw.githubusercontent.com/LavacoMotors/GovFleet-Motors2/refs/heads/main/public/images/2005-chevrolet-silverado-2500HD/2.jpeg",
-      "https://raw.githubusercontent.com/LavacoMotors/GovFleet-Motors2/refs/heads/main/public/images/2005-chevrolet-silverado-2500HD/3.jpeg",
-      "https://raw.githubusercontent.com/LavacoMotors/GovFleet-Motors2/refs/heads/main/public/images/2005-chevrolet-silverado-2500HD/4.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/1.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/2.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/3.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/4.jpeg",
     ],
     notes:
       "Former government fleet service truck with ladder rack. Fleet-maintained, passed California smog, and ready for work.",
@@ -54,38 +62,105 @@ const MOCK_INVENTORY = [
   },
 ];
 
-// Vehicle detail page
-function VehicleDetail() {
-  const { id } = useParams();
-  const vehicle = MOCK_INVENTORY.find((v) => v.id === id);
+// --- Lightbox Component ---
+function Lightbox({ images, currentIndex, onClose }) {
+  const [index, setIndex] = useState(currentIndex);
 
-  if (!vehicle) return <p className="text-center mt-10">Vehicle not found.</p>;
+  const showNext = (e) => {
+    e.stopPropagation();
+    setIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const showPrev = (e) => {
+    e.stopPropagation();
+    setIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-4">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        {vehicle.images.map((src, i) => (
-          <img key={i} src={src} alt={`${vehicle.make}-${i}`} className="rounded shadow" />
-        ))}
-      </div>
-      <p className="text-gray-700 mb-2">
-        <strong>Mileage:</strong> {vehicle.mileage.toLocaleString()} miles
-      </p>
-      <p className="text-gray-700 mb-2">
-        <strong>Location:</strong> {vehicle.location}
-      </p>
-      <p className="text-gray-700 mb-4">{vehicle.notes}</p>
-      <Link to="/inventory">
-        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-          Back to Inventory
-        </button>
-      </Link>
+    <div
+      className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
+      onClick={onClose}
+    >
+      <button
+        onClick={showPrev}
+        className="absolute left-5 text-white text-4xl font-bold"
+      >
+        ‹
+      </button>
+      <img
+        src={images[index]}
+        alt="Vehicle"
+        className="max-h-[90vh] max-w-[90vw] rounded shadow-lg"
+      />
+      <button
+        onClick={showNext}
+        className="absolute right-5 text-white text-4xl font-bold"
+      >
+        ›
+      </button>
     </div>
   );
 }
 
-// Inventory list page
+// --- Vehicle Detail Page ---
+function VehicleDetail() {
+  const { id } = useParams();
+  const vehicle = MOCK_INVENTORY.find((v) => v.id === id);
+  const navigate = useNavigate();
+
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  if (!vehicle) return <p className="text-center mt-10">Vehicle not found.</p>;
+
+  const openLightbox = (index) => setLightboxIndex(index);
+  const closeLightbox = () => setLightboxIndex(null);
+
+  return (
+    <div className="p-6 max-w-5xl mx-auto">
+      <h1 className="text-3xl font-bold mb-4 text-center">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        {vehicle.images.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={`${vehicle.make}-${i}`}
+            className="rounded shadow cursor-pointer hover:opacity-80"
+            onClick={() => openLightbox(i)}
+          />
+        ))}
+      </div>
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          images={vehicle.images}
+          currentIndex={lightboxIndex}
+          onClose={closeLightbox}
+        />
+      )}
+
+      <div className="text-gray-700 space-y-2">
+        <p>
+          <strong>Mileage:</strong> {vehicle.mileage.toLocaleString()} miles
+        </p>
+        <p>
+          <strong>Location:</strong> {vehicle.location}
+        </p>
+        <p>{vehicle.notes}</p>
+      </div>
+
+      <div className="mt-6 text-center">
+        <button
+          onClick={() => navigate("/inventory")}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Back to Inventory
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// --- Inventory Page ---
 function Inventory() {
   return (
     <div className="p-6 max-w-6xl mx-auto">
@@ -105,7 +180,9 @@ function Inventory() {
             </Link>
             <div className="p-4">
               <h3 className="font-semibold">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</h3>
-              <p className="text-gray-600 text-sm">{vehicle.mileage.toLocaleString()} miles</p>
+              <p className="text-gray-600 text-sm">
+                {vehicle.mileage.toLocaleString()} miles
+              </p>
               <p className="text-gray-600 text-sm mb-2">{vehicle.location}</p>
               <Link to={`/inventory/${vehicle.id}`}>
                 <button className="bg-blue-600 text-white px-3 py-2 rounded hover:bg-blue-700">
@@ -120,7 +197,7 @@ function Inventory() {
   );
 }
 
-// Homepage
+// --- Home Page ---
 function Home() {
   const featured = MOCK_INVENTORY[0];
   return (
@@ -154,7 +231,9 @@ function Home() {
             </Link>
             <div className="p-4">
               <h4 className="font-semibold">{`${featured.year} ${featured.make} ${featured.model}`}</h4>
-              <p className="text-gray-600 text-sm">{featured.mileage.toLocaleString()} miles</p>
+              <p className="text-gray-600 text-sm">
+                {featured.mileage.toLocaleString()} miles
+              </p>
               <p className="text-gray-600 text-sm mb-2">{featured.location}</p>
               <Link to={`/inventory/${featured.id}`}>
                 <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
@@ -169,7 +248,7 @@ function Home() {
   );
 }
 
-// Main App Component
+// --- Main App ---
 export default function App() {
   return (
     <Router>
