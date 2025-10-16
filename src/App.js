@@ -7,8 +7,8 @@ const MOCK_INVENTORY = [
     year: 2005,
     make: "Chevrolet",
     model: "Silverado 2500HD Service Truck",
-    mileage: 164000,
-    price: 6000,
+    mileage: 112000,
+    price: 8900,
     location: "Brea, CA",
     type: "Utility",
     vin: "1GCHK24U15E123456",
@@ -30,6 +30,7 @@ const MOCK_INVENTORY = [
   },
 ];
 
+// HEADER
 function Header() {
   return (
     <header className="bg-gray-900 text-white sticky top-0 z-10">
@@ -65,12 +66,13 @@ function Header() {
   );
 }
 
+// HOME PAGE
 function Home() {
   const featured = [...MOCK_INVENTORY].slice(-3).reverse();
 
   return (
     <main>
-      {/* HERO WITH FLAG OVERLAY */}
+      {/* HERO SECTION WITH FLAG */}
       <section className="relative text-white text-center py-20 bg-gray-900 overflow-hidden">
         <div
           className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1526038831220-2b90c8b0f2a0?auto=format&fit=crop&w=1800&q=60')] bg-cover bg-center opacity-60"
@@ -128,15 +130,6 @@ function Home() {
             </Link>
           ))}
         </div>
-
-        <div className="text-center mt-10">
-          <Link
-            to="/inventory"
-            className="inline-block bg-gray-900 text-white px-6 py-3 rounded font-semibold hover:bg-gray-800 transition"
-          >
-            View All Inventory
-          </Link>
-        </div>
       </section>
 
       {/* TESTIMONIALS */}
@@ -166,7 +159,7 @@ function Home() {
         </div>
       </section>
 
-      {/* CONTACT / FOOTER */}
+      {/* FOOTER */}
       <footer className="bg-gray-900 text-gray-200 py-10 mt-12">
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
           <div>
@@ -176,8 +169,18 @@ function Home() {
           <div>
             <h4 className="font-semibold mb-2">Contact</h4>
             <p>1215 W. Imperial Hwy #221, Brea CA 92821</p>
-            <p>Phone: <a href="tel:+17142693483" className="underline">714-269-3483</a></p>
-            <p>Email: <a href="mailto:govfleetmotors@gmail.com" className="underline">govfleetmotors@gmail.com</a></p>
+            <p>
+              Phone:{" "}
+              <a href="tel:+17142693483" className="underline">
+                714-269-3483
+              </a>
+            </p>
+            <p>
+              Email:{" "}
+              <a href="mailto:govfleetmotors@gmail.com" className="underline">
+                govfleetmotors@gmail.com
+              </a>
+            </p>
           </div>
           <div>
             <h4 className="font-semibold mb-2">Visit Us</h4>
@@ -199,9 +202,158 @@ function Home() {
   );
 }
 
-// (VehiclePage and Inventory stay exactly the same from your last version)
-// Keep them as-is and paste this file over your old App.js
+// VEHICLE PAGE
+function VehiclePage() {
+  const { id } = useParams();
+  const vehicle = MOCK_INVENTORY.find((v) => v.id === id);
+  const [lightbox, setLightbox] = useState(null);
 
+  if (!vehicle)
+    return (
+      <div className="max-w-5xl mx-auto px-6 py-12 text-center text-gray-700">
+        Vehicle not found.
+      </div>
+    );
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    setLightbox((i) => (i === 0 ? vehicle.images.length - 1 : i - 1));
+  };
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    setLightbox((i) => (i === vehicle.images.length - 1 ? 0 : i + 1));
+  };
+
+  return (
+    <main className="max-w-5xl mx-auto px-6 py-12 relative">
+      <h1 className="text-3xl font-bold mb-4">
+        {vehicle.year} {vehicle.make} {vehicle.model}
+      </h1>
+
+      <img
+        src={vehicle.images[0]}
+        alt={vehicle.model}
+        className="w-full h-96 object-cover rounded cursor-pointer"
+        onClick={() => setLightbox(0)}
+      />
+
+      <div className="grid grid-cols-3 gap-2 mt-3">
+        {vehicle.images.slice(1).map((img, i) => (
+          <img
+            key={i}
+            src={img}
+            alt="thumbnail"
+            className="h-32 w-full object-cover rounded cursor-pointer"
+            onClick={() => setLightbox(i + 1)}
+          />
+        ))}
+      </div>
+
+      {lightbox !== null && (
+        <div
+          className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
+          onClick={() => setLightbox(null)}
+        >
+          <img
+            src={vehicle.images[lightbox]}
+            alt="Full view"
+            className="max-h-[90%] max-w-[90%] rounded shadow-lg"
+          />
+          <button
+            onClick={() => setLightbox(null)}
+            className="absolute top-6 right-8 text-white text-3xl font-bold"
+          >
+            ✕
+          </button>
+          <button
+            onClick={prevImage}
+            className="absolute left-6 text-white text-4xl font-bold select-none"
+          >
+            ‹
+          </button>
+          <button
+            onClick={nextImage}
+            className="absolute right-6 text-white text-4xl font-bold select-none"
+          >
+            ›
+          </button>
+        </div>
+      )}
+
+      <div className="mt-6 text-gray-700">
+        <p className="mb-3">{vehicle.notes}</p>
+        <ul className="grid grid-cols-2 gap-2 text-sm">
+          <li><strong>VIN:</strong> {vehicle.vin}</li>
+          <li><strong>Mileage:</strong> {vehicle.mileage.toLocaleString()} mi</li>
+          <li><strong>Fuel:</strong> {vehicle.fuel}</li>
+          <li><strong>Transmission:</strong> {vehicle.transmission}</li>
+          <li><strong>Type:</strong> {vehicle.type}</li>
+          <li><strong>Location:</strong> {vehicle.location}</li>
+        </ul>
+
+        <div className="mt-6 flex gap-3">
+          <a
+            href="tel:+17142693483"
+            className="bg-gray-900 text-white px-4 py-2 rounded font-semibold"
+          >
+            Call Now
+          </a>
+          <Link
+            to="/inventory"
+            className="border px-4 py-2 rounded font-semibold"
+          >
+            Back to Inventory
+          </Link>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+// INVENTORY PAGE
+function Inventory() {
+  return (
+    <main className="max-w-6xl mx-auto px-6 py-12">
+      <h1 className="text-3xl font-bold mb-6">Available Inventory</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {MOCK_INVENTORY.map((v) => (
+          <article
+            key={v.id}
+            className="border rounded overflow-hidden bg-white shadow-sm"
+          >
+            <img
+              src={v.images[0]}
+              alt={`${v.make} ${v.model}`}
+              className="h-48 w-full object-cover"
+            />
+            <div className="p-4">
+              <h3 className="font-semibold">
+                {v.year} {v.make} {v.model}
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">
+                {v.mileage.toLocaleString()} miles • {v.location}
+              </p>
+              <div className="mt-3 flex justify-between items-center">
+                <div className="text-lg font-bold">
+                  ${v.price.toLocaleString()}
+                </div>
+                <Link
+                  to={`/vehicle/${v.id}`}
+                  className="bg-amber-500 px-3 py-1 rounded text-sm font-semibold text-gray-900"
+                >
+                  View Details
+                </Link>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </main>
+  );
+}
+
+// APP ROUTES
 export default function App() {
   return (
     <Router>
