@@ -22,7 +22,7 @@ const formatPrice = (num) =>
 const MOCK_INVENTORY = [
   {
     id: "chevy2500-2005",
-    status: "sold", // "available" | "sold"
+    status: "available", // "available" | "sold"
     year: 2005,
     make: "Chevrolet",
     model: "Silverado 2500HD Service Truck",
