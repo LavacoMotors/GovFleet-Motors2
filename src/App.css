@@ -1,0 +1,151 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.header {
+  text-align: center;
+  background: linear-gradient(to right, #1e3a8a, #1e40af);
+  color: white;
+  padding: 1.5rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.vehicle-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.vehicle-card:hover {
+  transform: scale(1.02);
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+.vehicle-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.sold-overlay {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: rgba(220, 38, 38, 0.9);
+  color: white;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.vehicle-card h3 {
+  margin: 0.8rem 1rem 0.3rem;
+  color: #1e3a8a;
+}
+
+.vehicle-card p {
+  margin: 0 1rem 1rem;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem 0;
+  background-color: #e5e7eb;
+  font-weight: 500;
+  border-top: 2px solid #d1d5db;
+}
+
+/* Lightbox Styles */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.lightbox-content {
+  position: relative;
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 12px;
+  max-width: 90%;
+  max-height: 90%;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.lightbox-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1d4ed8;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+
+.nav-arrow.left {
+  left: -50px;
+}
+
+.nav-arrow.right {
+  right: -50px;
+}
+
+.lightbox-info {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .nav-arrow.left {
+    left: 10px;
+  }
+  .nav-arrow.right {
+    right: 10px;
+  }
+}
