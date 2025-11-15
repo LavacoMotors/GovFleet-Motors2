@@ -1,3 +1,4 @@
+/* Global layout */
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -5,6 +6,13 @@ body {
   color: #111827;
 }
 
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
 .header {
   text-align: center;
   background: linear-gradient(to right, #1e3a8a, #1e40af);
@@ -13,24 +21,46 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: 0.05em;
+}
+
+.header h2 {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+/* Inventory grid */
 .inventory-grid {
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
+/* Vehicle cards */
 .vehicle-card {
   background: white;
   border-radius: 16px;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  display: flex;
+  flex-direction: column;
 }
 
 .vehicle-card:hover {
-  transform: scale(1.02);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
 }
 
 .image-wrapper {
@@ -43,21 +73,25 @@ body {
   object-fit: cover;
 }
 
+/* SOLD tag */
 .sold-overlay {
   position: absolute;
   top: 8px;
   left: 8px;
-  background-color: rgba(220, 38, 38, 0.9);
+  background-color: rgba(220, 38, 38, 0.95);
   color: white;
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
 }
 
+/* Card text */
 .vehicle-card h3 {
-  margin: 0.8rem 1rem 0.3rem;
+  margin: 0.9rem 1rem 0.3rem;
   color: #1e3a8a;
+  font-size: 1.05rem;
 }
 
 .vehicle-card p {
@@ -66,15 +100,21 @@ body {
   font-size: 0.9rem;
 }
 
+/* Footer counts */
 .footer {
   text-align: center;
   padding: 1rem 0;
   background-color: #e5e7eb;
   font-weight: 500;
   border-top: 2px solid #d1d5db;
+  margin-top: auto;
 }
 
-/* Lightbox Styles */
+.footer strong {
+  color: #1e3a8a;
+}
+
+/* Lightbox overlay */
 .lightbox-overlay {
   position: fixed;
   inset: 0;
@@ -85,23 +125,28 @@ body {
   z-index: 999;
 }
 
+/* Lightbox content */
 .lightbox-content {
   position: relative;
   background: #f9fafb;
   padding: 1rem;
   border-radius: 12px;
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 900px;
+  width: 95%;
+  max-height: 90vh;
   text-align: center;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  box-sizing: border-box;
 }
 
+/* Lightbox image */
 .lightbox-image {
   width: 100%;
   height: auto;
   border-radius: 10px;
 }
 
+/* Close button */
 .close-btn {
   position: absolute;
   top: 10px;
@@ -115,6 +160,7 @@ body {
   cursor: pointer;
 }
 
+/* Navigation arrows */
 .nav-arrow {
   position: absolute;
   top: 50%;
@@ -123,10 +169,13 @@ body {
   color: white;
   border: none;
   font-size: 1.5rem;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
+  border-radius: 999px;
+  width: 38px;
+  height: 38px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-arrow.left {
@@ -137,15 +186,40 @@ body {
   right: -50px;
 }
 
+/* Lightbox text */
 .lightbox-info {
   margin-top: 1rem;
 }
 
+.lightbox-info h2 {
+  margin: 0 0 0.5rem;
+  color: #1e3a8a;
+}
+
+.lightbox-info p {
+  margin: 0;
+  color: #4b5563;
+}
+
+/* Mobile tweaks */
 @media (max-width: 768px) {
+  .inventory-grid {
+    padding: 1.25rem;
+  }
+
   .nav-arrow.left {
     left: 10px;
   }
+
   .nav-arrow.right {
     right: 10px;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .header h2 {
+    font-size: 0.9rem;
   }
 }
