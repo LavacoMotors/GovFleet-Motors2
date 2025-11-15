@@ -1,9 +1,10 @@
 /* Global layout */
+
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f3f4f6;
-  color: #111827;
+  background-color: #0f172a; /* dark navy */
+  color: #e5e7eb;
 }
 
 .app {
@@ -13,154 +14,292 @@ body {
 }
 
 /* Header */
-.header {
-  text-align: center;
-  background: linear-gradient(to right, #1e3a8a, #1e40af);
-  color: white;
-  padding: 1.5rem 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1f2937;
 }
 
-.header h1 {
-  margin: 0;
-  font-size: 2rem;
-  letter-spacing: 0.05em;
-}
-
-.header h2 {
-  margin: 0.5rem 0 0;
-  font-size: 1rem;
-  font-weight: 400;
-  opacity: 0.9;
-}
-
-/* Inventory grid */
-.inventory-grid {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem;
-  max-width: 1200px;
+.header-inner {
+  max-width: 1120px;
   margin: 0 auto;
-  box-sizing: border-box;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Vehicle cards */
-.vehicle-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-mark {
+  background-color: #1d4ed8;
+  color: #f9fafb;
+  font-weight: 800;
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+
+.brand-text {
   display: flex;
   flex-direction: column;
 }
 
+.brand-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #f9fafb;
+}
+
+.brand-tagline {
+  font-size: 0.78rem;
+  color: #9ca3af;
+}
+
+.header-contact {
+  text-align: right;
+  font-size: 0.8rem;
+  color: #d1d5db;
+}
+
+.header-phone {
+  font-weight: 600;
+  display: block;
+}
+
+.header-city {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* Hero */
+
+.hero {
+  background-image: linear-gradient(
+      to right,
+      rgba(15, 23, 42, 0.95),
+      rgba(15, 23, 42, 0.9)
+    ),
+    radial-gradient(circle at top left, #1d4ed8 0, transparent 55%);
+  padding: 3.5rem 1.5rem 3rem;
+}
+
+.hero-content {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 2.1rem;
+  margin: 0 0 0.8rem;
+  color: #f9fafb;
+}
+
+.hero p {
+  margin: 0 0 1.5rem;
+  max-width: 640px;
+  color: #d1d5db;
+  font-size: 0.98rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.primary-btn {
+  border: none;
+  background: linear-gradient(to right, #1d4ed8, #2563eb);
+  color: #f9fafb;
+  padding: 0.55rem 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.45);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.4);
+}
+
+/* Inventory section */
+
+.inventory-section {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #e5e7eb;
+}
+
+.section-header p {
+  margin: 0.4rem 0 1.6rem;
+  color: #9ca3af;
+  font-size: 0.9rem;
+}
+
+.section-sub {
+  color: #cbd5f5;
+}
+
+/* Grid */
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.4rem;
+}
+
+.vehicle-card {
+  background: #020617;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid #1f2937;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
 .vehicle-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+  border-color: #2563eb;
 }
 
 .image-wrapper {
   position: relative;
+  background: #111827;
 }
 
 .vehicle-card img {
   width: 100%;
-  height: 200px;
+  height: 190px;
   object-fit: cover;
+  display: block;
 }
 
-/* SOLD tag */
 .sold-overlay {
   position: absolute;
-  top: 8px;
-  left: 8px;
-  background-color: rgba(220, 38, 38, 0.95);
-  color: white;
-  font-weight: 700;
+  top: 10px;
+  left: 10px;
   padding: 4px 10px;
   border-radius: 999px;
+  background-color: rgba(220, 38, 38, 0.96);
+  color: #f9fafb;
+  font-weight: 700;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
 }
 
-/* Card text */
-.vehicle-card h3 {
-  margin: 0.9rem 1rem 0.3rem;
-  color: #1e3a8a;
-  font-size: 1.05rem;
+.card-body {
+  padding: 0.85rem 1rem 1rem;
 }
 
-.vehicle-card p {
-  margin: 0 1rem 1rem;
-  color: #4b5563;
-  font-size: 0.9rem;
+.card-body h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  color: #e5e7eb;
 }
 
-/* Footer counts */
-.footer {
-  text-align: center;
-  padding: 1rem 0;
-  background-color: #e5e7eb;
-  font-weight: 500;
-  border-top: 2px solid #d1d5db;
+.card-body p {
+  margin: 0;
+  font-size: 0.86rem;
+  color: #9ca3af;
+}
+
+/* Footer */
+
+.site-footer {
   margin-top: auto;
+  border-top: 1px solid #1f2937;
+  background-color: #020617;
 }
 
-.footer strong {
-  color: #1e3a8a;
+.footer-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 1.4rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #9ca3af;
 }
 
-/* Lightbox overlay */
+.footer-note {
+  margin-top: 0.3rem;
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
+/* Lightbox */
+
 .lightbox-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(15, 23, 42, 0.94);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 30;
 }
 
-/* Lightbox content */
 .lightbox-content {
   position: relative;
-  background: #f9fafb;
+  background: #020617;
   padding: 1rem;
-  border-radius: 12px;
+  border-radius: 1rem;
   max-width: 900px;
-  width: 95%;
+  width: 90%;
   max-height: 90vh;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
   text-align: center;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-  box-sizing: border-box;
+  border: 1px solid #1f2937;
 }
 
-/* Lightbox image */
 .lightbox-image {
   width: 100%;
   height: auto;
-  border-radius: 10px;
+  max-height: 60vh;
+  border-radius: 0.75rem;
+  object-fit: contain;
+  background-color: #020617;
 }
 
-/* Close button */
 .close-btn {
   position: absolute;
   top: 10px;
   right: 12px;
-  background: #1e3a8a;
-  color: white;
+  background: #111827;
+  color: #f9fafb;
   border: none;
-  font-size: 1.2rem;
-  padding: 5px 10px;
-  border-radius: 6px;
+  font-size: 1.1rem;
+  padding: 4px 9px;
+  border-radius: 999px;
   cursor: pointer;
 }
 
-/* Navigation arrows */
 .nav-arrow {
   position: absolute;
   top: 50%;
@@ -168,58 +307,63 @@ body {
   background: #1d4ed8;
   color: white;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   border-radius: 999px;
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .nav-arrow.left {
-  left: -50px;
+  left: -18px;
 }
 
 .nav-arrow.right {
-  right: -50px;
+  right: -18px;
 }
 
-/* Lightbox text */
 .lightbox-info {
-  margin-top: 1rem;
+  margin-top: 0.9rem;
 }
 
 .lightbox-info h2 {
-  margin: 0 0 0.5rem;
-  color: #1e3a8a;
+  margin: 0 0 0.3rem;
+  font-size: 1.1rem;
+  color: #e5e7eb;
 }
 
 .lightbox-info p {
   margin: 0;
-  color: #4b5563;
+  font-size: 0.86rem;
+  color: #9ca3af;
 }
 
-/* Mobile tweaks */
+/* Responsive tweaks */
+
 @media (max-width: 768px) {
-  .inventory-grid {
-    padding: 1.25rem;
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
   }
 
-  .nav-arrow.left {
-    left: 10px;
+  .hero {
+    padding: 2.5rem 1.25rem 2.4rem;
   }
 
-  .nav-arrow.right {
-    right: 10px;
-  }
-
-  .header h1 {
+  .hero h1 {
     font-size: 1.6rem;
   }
 
-  .header h2 {
-    font-size: 0.9rem;
+  .inventory-section {
+    padding: 2rem 1.25rem 2.5rem;
+  }
+
+  .nav-arrow.left {
+    left: 6px;
+  }
+
+  .nav-arrow.right {
+    right: 6px;
   }
 }
