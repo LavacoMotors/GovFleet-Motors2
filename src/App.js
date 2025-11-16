@@ -7,13 +7,12 @@ const App = () => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   // Vehicles configuration
-  // Thumbnail = first item in gallery (for Silverado: 1.jpeg)
   const vehicles = [
     {
       id: 1,
       name: "2005 Chevrolet Silverado 2500HD Utility Bed",
       status: "available",
-      details: "6.0L V8 • 2wd • Utility Bed City Truck • 168,000 miles",
+      details: "6.0L V8 • 4x4 • Utility Bed • 164,000 miles",
       gallery: [
         "/images/2005-chevrolet-silverado-2500HD/1.jpeg",
         "/images/2005-chevrolet-silverado-2500HD/2.jpeg",
@@ -23,46 +22,35 @@ const App = () => {
         "/images/2005-chevrolet-silverado-2500HD/6.jpeg",
         "/images/2005-chevrolet-silverado-2500HD/7.jpeg",
         "/images/2005-chevrolet-silverado-2500HD/8.jpeg",
-        "/images/2005-chevrolet-silverado-2500HD/9.jpeg",
-      ],
+        "/images/2005-chevrolet-silverado-2500HD/9.jpeg"
+      ]
     },
     {
       id: 2,
-      name: "2005 Chevrolet Silverado 2500HD Utility Bed",
+      name: "Coming Soon",
       status: "available",
-      details: "2005 Chevrolet Silverado 2500 HD - 165k Miles
-
-Clean Title 
-Passed Smog
-Current Registration 
-1 Owner
-Well Maintained 
-6.0L V8 Gasoline / Tow Package 
-Reliable Work Truck
-
-$5700",
-      // Thumbnail placeholder for now – replace with your next vehicle folder/1.jpeg later.
-      gallery: ["/preview.jpg"],
+      details: "More government fleet vehicles arriving soon.",
+      gallery: ["/preview.jpg"]
     },
     {
       id: 3,
       name: "Coming Soon",
       status: "sold",
-      details: "Sold — stay tuned for more inventory.",
-      gallery: ["/preview.jpg"],
+      details: "Sold - stay tuned for more inventory.",
+      gallery: ["/preview.jpg"]
     },
     {
       id: 4,
       name: "Coming Soon",
       status: "available",
       details: "Future fleet additions will appear here.",
-      gallery: ["/preview.jpg"],
-    },
+      gallery: ["/preview.jpg"]
+    }
   ];
 
   const openLightbox = (vehicle) => {
     setSelectedVehicle(vehicle);
-    setActiveImageIndex(0); // always start at first image (thumbnail = 1.jpeg)
+    setActiveImageIndex(0);
     setIsLightboxOpen(true);
   };
 
@@ -72,24 +60,34 @@ $5700",
 
   const nextImage = () => {
     if (!selectedVehicle || !selectedVehicle.gallery) return;
-    setActiveImageIndex((prev) => (prev + 1) % selectedVehicle.gallery.length);
+    setActiveImageIndex((prev) => {
+      const total = selectedVehicle.gallery.length;
+      return (prev + 1) % total;
+    });
   };
 
   const prevImage = () => {
     if (!selectedVehicle || !selectedVehicle.gallery) return;
-    setActiveImageIndex((prev) =>
-      (prev - 1 + selectedVehicle.gallery.length) %
-      selectedVehicle.gallery.length
-    );
+    setActiveImageIndex((prev) => {
+      const total = selectedVehicle.gallery.length;
+      return (prev - 1 + total) % total;
+    });
   };
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") closeLightbox();
+      if (e.key === "Escape") {
+        closeLightbox();
+      }
       if (!selectedVehicle) return;
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "ArrowLeft") prevImage();
+      if (e.key === "ArrowRight") {
+        nextImage();
+      }
+      if (e.key === "ArrowLeft") {
+        prevImage();
+      }
     };
+
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedVehicle]);
@@ -164,9 +162,7 @@ $5700",
                   onClick={() => openLightbox(vehicle)}
                 >
                   <div className="image-wrapper">
-                    {thumbnail && (
-                      <img src={thumbnail} alt={vehicle.name} />
-                    )}
+                    {thumbnail && <img src={thumbnail} alt={vehicle.name} />}
                     {vehicle.status === "sold" && (
                       <div className="sold-overlay">SOLD</div>
                     )}
@@ -189,8 +185,8 @@ $5700",
             Sold: <strong>{soldCount}</strong>
           </p>
           <p className="footer-note">
-            GovFleet Motors &copy; {new Date().getFullYear()} &mdash; Premium
-            Used Government Fleet Vehicles.
+            GovFleet Motors &copy; {new Date().getFullYear()} - Premium Used
+            Government Fleet Vehicles.
           </p>
         </div>
       </footer>
@@ -205,7 +201,6 @@ $5700",
               ✕
             </button>
 
-            {/* Gallery navigation for the selected vehicle */}
             {selectedVehicle.gallery && selectedVehicle.gallery.length > 1 && (
               <>
                 <button className="nav-arrow left" onClick={prevImage}>
@@ -226,12 +221,13 @@ $5700",
             <div className="lightbox-info">
               <h2>{selectedVehicle.name}</h2>
               <p>{selectedVehicle.details}</p>
-              {selectedVehicle.gallery && selectedVehicle.gallery.length > 1 && (
-                <p className="lightbox-counter">
-                  Photo {activeImageIndex + 1} of{" "}
-                  {selectedVehicle.gallery.length}
-                </p>
-              )}
+              {selectedVehicle.gallery &&
+                selectedVehicle.gallery.length > 1 && (
+                  <p className="lightbox-counter">
+                    Photo {activeImageIndex + 1} of{" "}
+                    {selectedVehicle.gallery.length}
+                  </p>
+                )}
             </div>
           </div>
         </div>
