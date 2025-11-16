@@ -1,323 +1,373 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-const App = () => {
+const vehicles = [
+  {
+    id: "silverado-2005",
+    name: "2005 Chevrolet Silverado 2500HD Utility Bed",
+    status: "sold",
+    details: "City Fleet Truck • 6.0L V8 • Tow Package • 165,000 miles",
+    description: `2005 Chevrolet Silverado 2500 HD - 165k Miles
+
+Clean Title 
+Passed Smog
+Current Registration 
+1 Owner
+Well Maintained 
+6.0L V8 Gasoline / Tow Package 
+Reliable Work Truck
+
+$5700`,
+    mileage: 165000,
+    price: 5700,
+    images: [
+      "/images/2005-chevrolet-silverado-2500HD/1.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/2.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/3.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/4.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/5.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/6.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/7.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/8.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/9.jpeg",
+    ],
+  },
+  {
+    id: "ambulance-2010",
+    name: "2010 Ford E-450 Ambulance",
+    status: "available",
+    details: "6.8L V10 • Dual Rear Wheels • Former City Fleet Ambulance",
+    description: `2010 Ford E-450 Ambulance
+
+Clean Title
+Passed Smog
+Current Registration
+
+Fleet Maintained
+Dual Rear Wheels
+Ready for Conversion or Service Use`,
+    mileage: 84000,
+    price: 0, // 0 = "Call for pricing" in the lightbox
+    images: [
+      "/images/2010-ford-e450-ambulance-84k/1.JPG",
+      "/images/2010-ford-e450-ambulance-84k/2.JPG",
+      "/images/2010-ford-e450-ambulance-84k/3.JPG",
+      "/images/2010-ford-e450-ambulance-84k/4.JPG",
+      "/images/2010-ford-e450-ambulance-84k/5.JPG",
+      "/images/2010-ford-e450-ambulance-84k/6.JPG",
+      "/images/2010-ford-e450-ambulance-84k/7.JPG",
+      "/images/2010-ford-e450-ambulance-84k/8.JPG",
+      "/images/2010-ford-e450-ambulance-84k/9.JPG",
+      "/images/2010-ford-e450-ambulance-84k/10.JPG",
+    ],
+  },
+
+  // 2018 Explorer – 103k
+  {
+    id: "explorer-2018-103k",
+    name: "2018 Ford Explorer Police Interceptor",
+    status: "available",
+    details:
+      "Former Police Vehicle • Fleet Maintained • 3.7L V6 • AWD • 103,000 miles",
+    description: `2018 Ford Explorer Police Interceptor
+
+Clean Title
+Passed Smog
+Current Registration 
+
+1 Owner 
+3.7L V6 - AWD (All Wheel Drive)
+Well Maintained 
+Ballistic Front Doors / Push Bar / Spotlights 
+
+$8000`,
+    mileage: 103000,
+    price: 8000,
+    images: [
+      "/images/2018-ford-explorer-103k/1.JPG",
+      "/images/2018-ford-explorer-103k/2.JPG",
+      "/images/2018-ford-explorer-103k/3.JPG",
+      "/images/2018-ford-explorer-103k/4.JPG",
+      "/images/2018-ford-explorer-103k/5.JPG",
+      "/images/2018-ford-explorer-103k/6.JPG",
+      "/images/2018-ford-explorer-103k/7.JPG",
+      "/images/2018-ford-explorer-103k/8.JPG",
+      "/images/2018-ford-explorer-103k/9.JPG",
+    ],
+  },
+
+  // 2017 Explorer – 96k
+  {
+    id: "explorer-2017-96k",
+    name: "2017 Ford Explorer Police Interceptor",
+    status: "available",
+    details:
+      "Former Police Interceptor • Fleet Maintained • 3.7L V6 • AWD • 96,000 miles",
+    description: `2017 Ford Explorer Police Interceptor
+
+✔️ 96K Original Miles
+✔️ Clean Title
+✔️ Just Passed Smog
+✔️ Current Registration
+
+✅ 1 Owner
+✅ Fleet Maintained
+✅ Recently Serviced
+✅ 3.7L V6 – AWD (All-Wheel Drive)
+
+$7,900`,
+    mileage: 96000,
+    price: 7900,
+    images: [
+      "/images/2017-ford-explorer-96k/1.JPG",
+      "/images/2017-ford-explorer-96k/2.JPG",
+      "/images/2017-ford-explorer-96k/3.JPG",
+      "/images/2017-ford-explorer-96k/4.JPG",
+      "/images/2017-ford-explorer-96k/5.JPG",
+      "/images/2017-ford-explorer-96k/6.JPG",
+      "/images/2017-ford-explorer-96k/7.JPG",
+      "/images/2017-ford-explorer-96k/8.JPG",
+      "/images/2017-ford-explorer-96k/9.JPG",
+    ],
+  },
+
+  // PLACEHOLDERS
+  {
+    id: "placeholder-1",
+    name: "Coming Soon – Government Fleet Vehicle",
+    status: "available",
+    details: "New inventory arriving soon • Government Fleet Maintained",
+    description: "New vehicle coming soon. Check back for photos and full details.",
+    mileage: 0,
+    price: 0,
+    images: [],
+  },
+  {
+    id: "placeholder-2",
+    name: "Coming Soon – Government Fleet Vehicle",
+    status: "available",
+    details: "New inventory arriving soon • Government Fleet Maintained",
+    description: "New vehicle coming soon. Check back for photos and full details.",
+    mileage: 0,
+    price: 0,
+    images: [],
+  },
+  {
+    id: "placeholder-3",
+    name: "Coming Soon – Government Fleet Vehicle",
+    status: "available",
+    details: "New inventory arriving soon • Government Fleet Maintained",
+    description: "New vehicle coming soon. Check back for photos and full details.",
+    mileage: 0,
+    price: 0,
+    images: [],
+  },
+];
+
+function formatMileage(miles) {
+  if (!miles || miles <= 0) return "Mileage: See Details";
+  return `Mileage: ${miles.toLocaleString()} miles`;
+}
+
+function formatPrice(price) {
+  if (!price || price <= 0) return "Call for pricing";
+  return `$${price.toLocaleString()}`;
+}
+
+function App() {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
-  // ============================
-  // VEHICLE INVENTORY
-  // ============================
-  const vehicles = [
-    // 1) 2005 Silverado – SOLD
-    {
-      id: 1,
-      name: "2005 Chevrolet Silverado 2500HD Utility Bed",
-      status: "sold",
-      details: "6.0L V8 • 4x2 • City Fleet Truck • 165,000 miles",
-      price: "$5,700",
-      description: [
-        "2005 Chevrolet Silverado 2500 HD – 165k miles.",
-        "Reliable city fleet utility bed work truck recently sold. Clean, straight body and ready for jobsite duty from day one."
-      ],
-      features: [
-        "Clean title",
-        "Passed smog",
-        "Current registration",
-        "1 owner",
-        "Well maintained",
-        "6.0L V8 gasoline with tow package",
-        "Reliable work truck"
-      ],
-      gallery: [
-        "/images/2005-chevrolet-silverado-2500HD/1.jpeg",
-        "/images/2005-chevrolet-silverado-2500HD/2.jpeg",
-        "/images/2005-chevrolet-silverado-2500HD/3.jpeg",
-        "/images/2005-chevrolet-silverado-2500HD/4.jpeg",
-        "/images/2005-chevrolet-silverado-2500HD/5.jpeg",
-        "/images/2005-chevrolet-silverado-2500HD/6.jpeg",
-        "/images/2005-chevrolet-silverado-2500HD/7.jpeg",
-        "/images/2005-chevrolet-silverado-2500HD/8.jpeg",
-        "/images/2005-chevrolet-silverado-2500HD/9.jpeg"
-      ]
-    },
+  const totalVehicles = vehicles.length;
+  const availableCount = vehicles.filter((v) => v.status === "available").length;
+  const soldCount = vehicles.filter((v) => v.status === "sold").length;
 
-    // 2) 2010 Ford E-450 Ambulance – AVAILABLE
-    {
-      id: 2,
-      name: "2010 Ford E-450 Ambulance",
-      status: "available",
-      details: "Powerstroke Turbo Diesel • 84,000 miles • Former municipal ambulance",
-      price: "$13,500",
-      description: [
-        "Well-maintained former municipal ambulance, ready for its next chapter.",
-        "Whether you're outfitting for EMS, mobile service, overlanding, or a camper conversion, this is a clean, low-mileage rig with solid bones."
-      ],
-      features: [
-        "Powerstroke Turbo Diesel",
-        "Only 84,000 original miles",
-        "Clean title – one owner",
-        "Fleet-maintained – Southern California",
-        "Current registration",
-        "Fully functioning emergency equipment: lights, siren, air horn"
-      ],
-      gallery: [
-        "/images/2010-ford-e450-ambulance-84k/1.JPG",
-        "/images/2010-ford-e450-ambulance-84k/2.JPG",
-        "/images/2010-ford-e450-ambulance-84k/3.JPG",
-        "/images/2010-ford-e450-ambulance-84k/4.JPG",
-        "/images/2010-ford-e450-ambulance-84k/5.JPG",
-        "/images/2010-ford-e450-ambulance-84k/6.JPG",
-        "/images/2010-ford-e450-ambulance-84k/7.JPG",
-        "/images/2010-ford-e450-ambulance-84k/8.JPG",
-        "/images/2010-ford-e450-ambulance-84k/9.JPG",
-        "/images/2010-ford-e450-ambulance-84k/10.JPG"
-      ]
-    },
-
-    // 3) Coming soon cards
-    {
-      id: 3,
-      name: "Coming Soon",
-      status: "available",
-      details: "More government fleet vehicles arriving soon.",
-      gallery: ["/preview.jpg"]
-    },
-    {
-      id: 4,
-      name: "Coming Soon",
-      status: "available",
-      details: "New arrivals on the way.",
-      gallery: ["/preview.jpg"]
-    },
-    {
-      id: 5,
-      name: "Coming Soon",
-      status: "available",
-      details: "Future fleet additions will appear here.",
-      gallery: ["/preview.jpg"]
-    }
-  ];
-
-  // ============================
-  // LIGHTBOX LOGIC
-  // ============================
-  const openLightbox = (vehicle) => {
+  const openVehicle = (vehicle) => {
     setSelectedVehicle(vehicle);
-    setActiveImageIndex(0);
-    setIsLightboxOpen(true);
+    setSelectedImageIndex(0);
+    setLightboxOpen(true);
   };
 
   const closeLightbox = () => {
-    setIsLightboxOpen(false);
+    setLightboxOpen(false);
+    setSelectedVehicle(null);
   };
 
-  const nextImage = () => {
-    if (!selectedVehicle || !selectedVehicle.gallery) return;
-    setActiveImageIndex((prev) => {
-      const total = selectedVehicle.gallery.length;
-      return (prev + 1) % total;
-    });
+  const showPrevImage = (e) => {
+    e.stopPropagation();
+    if (!selectedVehicle || !selectedVehicle.images?.length) return;
+    setSelectedImageIndex((prev) =>
+      prev === 0 ? selectedVehicle.images.length - 1 : prev - 1
+    );
   };
 
-  const prevImage = () => {
-    if (!selectedVehicle || !selectedVehicle.gallery) return;
-    setActiveImageIndex((prev) => {
-      const total = selectedVehicle.gallery.length;
-      return (prev - 1 + total) % total;
-    });
+  const showNextImage = (e) => {
+    e.stopPropagation();
+    if (!selectedVehicle || !selectedVehicle.images?.length) return;
+    setSelectedImageIndex((prev) =>
+      prev === selectedVehicle.images.length - 1 ? 0 : prev + 1
+    );
   };
 
+  // ESC to close, arrows to navigate
   useEffect(() => {
+    if (!lightboxOpen) return;
+
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         closeLightbox();
-      }
-      if (!selectedVehicle) return;
-      if (e.key === "ArrowRight") {
-        nextImage();
-      }
-      if (e.key === "ArrowLeft") {
-        prevImage();
+      } else if (e.key === "ArrowLeft") {
+        showPrevImage(e);
+      } else if (e.key === "ArrowRight") {
+        showNextImage(e);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedVehicle]);
+  }, [lightboxOpen, selectedVehicle]);
 
-  const availableCount = vehicles.filter((v) => v.status === "available").length;
-  const soldCount = vehicles.filter((v) => v.status === "sold").length;
-
-  const scrollToInventory = () => {
-    const el = document.getElementById("inventory-section");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  // ============================
-  // RENDER
-  // ============================
   return (
     <div className="app">
-      {/* Header */}
-      <header className="site-header">
-        <div className="header-inner">
-          <div className="brand">
-            <div className="brand-mark">GFM</div>
-            <div className="brand-text">
-              <span className="brand-name">GovFleet Motors</span>
-              <span className="brand-tagline">
-                Premium Used Government Fleet Vehicles
-              </span>
-            </div>
-          </div>
-          <div className="header-contact">
-            <span className="header-phone">714-269-3483</span>
-            <span className="header-city">Brea, California</span>
-          </div>
-        </div>
+      <header className="app-header">
+        <h1>Lavaco Motors / GovFleet Motors</h1>
+        <p>Premium Used Government Fleet Vehicles</p>
       </header>
 
-      {/* Hero */}
-      <main>
-        <section className="hero">
-          <div className="hero-content">
-            <h1>Premium Used Government Fleet Vehicles</h1>
-            <p>
-              Specializing in retired police interceptors, trucks, SUVs, and
-              municipal fleet units sourced from trusted public agencies.
-            </p>
-            <div className="hero-actions">
-              <button className="primary-btn" onClick={scrollToInventory}>
-                View Inventory
-              </button>
+      <main className="inventory-section">
+        <div className="inventory-grid">
+          {vehicles.map((vehicle) => (
+            <div
+              key={vehicle.id}
+              className={`vehicle-card ${
+                vehicle.status === "sold" ? "vehicle-card-sold" : ""
+              }`}
+              onClick={() => openVehicle(vehicle)}
+            >
+              <div className="vehicle-image-wrapper">
+                {vehicle.images && vehicle.images.length > 0 && (
+                  <img
+                    src={vehicle.images[0]}
+                    alt={vehicle.name}
+                    className="vehicle-image"
+                  />
+                )}
+
+                {vehicle.status === "sold" && (
+                  <div className="sold-banner">SOLD</div>
+                )}
+              </div>
+
+              <div className="vehicle-info">
+                <h2 className="vehicle-name">{vehicle.name}</h2>
+                <p className="vehicle-details">{vehicle.details}</p>
+                <p className="vehicle-mileage">
+                  {formatMileage(vehicle.mileage)}
+                </p>
+                <p className={`vehicle-status status-${vehicle.status}`}>
+                  {vehicle.status === "sold" ? "Sold" : "Available"}
+                </p>
+                {/* Prices hidden on cards */}
+              </div>
             </div>
-          </div>
-        </section>
-
-        {/* Inventory */}
-        <section id="inventory-section" className="inventory-section">
-          <div className="section-header">
-            <h2>Current Inventory</h2>
-            <p>
-              Vehicles are inspected and prepared for their next assignment.{" "}
-              <span className="section-sub">
-                Sold units stay visible to showcase past fleet builds.
-              </span>
-            </p>
-          </div>
-
-          <div className="inventory-grid">
-            {vehicles.map((vehicle) => {
-              const thumbnail =
-                vehicle.gallery && vehicle.gallery.length > 0
-                  ? vehicle.gallery[0]
-                  : "";
-              return (
-                <div
-                  key={vehicle.id}
-                  className={`vehicle-card ${vehicle.status}`}
-                  onClick={() =>
-                    vehicle.gallery && vehicle.gallery.length > 0
-                      ? openLightbox(vehicle)
-                      : null
-                  }
-                >
-                  <div className="image-wrapper">
-                    {thumbnail && <img src={thumbnail} alt={vehicle.name} />}
-                    {vehicle.status === "sold" && (
-                      <div className="sold-overlay">SOLD</div>
-                    )}
-                  </div>
-                  <div className="card-body">
-                    <h3>{vehicle.name}</h3>
-                    <p>{vehicle.details}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
+          ))}
+        </div>
       </main>
 
-      {/* Footer */}
-      <footer className="site-footer">
-        <div className="footer-inner">
-          <p>
-            Vehicles Available: <strong>{availableCount}</strong> &nbsp;|&nbsp;
-            Sold: <strong>{soldCount}</strong>
-          </p>
-          <p className="footer-note">
-            GovFleet Motors &copy; {new Date().getFullYear()} - Premium Used
-            Government Fleet Vehicles.
-          </p>
-        </div>
-      </footer>
-
-      {/* Lightbox */}
-      {isLightboxOpen && selectedVehicle && (
+      {lightboxOpen && selectedVehicle && (
         <div className="lightbox-overlay" onClick={closeLightbox}>
-          <div
-            className="lightbox-content"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button className="close-btn" onClick={closeLightbox}>
-              ✕
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <button className="lightbox-close" onClick={closeLightbox}>
+              ×
             </button>
 
-            {selectedVehicle.gallery && selectedVehicle.gallery.length > 1 && (
-              <>
-                <button className="nav-arrow left" onClick={prevImage}>
-                  ◀
-                </button>
-                <button className="nav-arrow right" onClick={nextImage}>
-                  ▶
-                </button>
-              </>
-            )}
+            <div className="lightbox-main">
+              <div className="lightbox-image-section">
+                {selectedVehicle.images && selectedVehicle.images.length > 0 && (
+                  <div className="lightbox-image-wrapper">
+                    <button
+                      className="lightbox-arrow lightbox-arrow-left"
+                      onClick={showPrevImage}
+                    >
+                      ‹
+                    </button>
 
-            <img
-              src={selectedVehicle.gallery[activeImageIndex]}
-              alt={selectedVehicle.name}
-              className="lightbox-image"
-            />
+                    <img
+                      src={selectedVehicle.images[selectedImageIndex]}
+                      alt={`${selectedVehicle.name} - ${
+                        selectedImageIndex + 1
+                      }`}
+                      className="lightbox-image"
+                    />
 
-            <div className="lightbox-info">
-              <h2>{selectedVehicle.name}</h2>
-              {selectedVehicle.price && (
-                <p className="lightbox-price">{selectedVehicle.price}</p>
-              )}
-              <p>{selectedVehicle.details}</p>
-
-              {selectedVehicle.description &&
-                selectedVehicle.description.map((para, idx) => (
-                  <p key={idx}>{para}</p>
-                ))}
-
-              {selectedVehicle.features && (
-                <ul className="lightbox-features">
-                  {selectedVehicle.features.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
-              )}
-
-              {selectedVehicle.gallery &&
-                selectedVehicle.gallery.length > 1 && (
-                  <p className="lightbox-counter">
-                    Photo {activeImageIndex + 1} of{" "}
-                    {selectedVehicle.gallery.length}
-                  </p>
+                    <button
+                      className="lightbox-arrow lightbox-arrow-right"
+                      onClick={showNextImage}
+                    >
+                      ›
+                    </button>
+                  </div>
                 )}
+
+                {selectedVehicle.images &&
+                  selectedVehicle.images.length > 1 && (
+                    <div className="lightbox-thumbnails">
+                      {selectedVehicle.images.map((img, index) => (
+                        <button
+                          key={img + index}
+                          className={`thumbnail-button ${
+                            index === selectedImageIndex ? "active" : ""
+                          }`}
+                          onClick={() => setSelectedImageIndex(index)}
+                        >
+                          <img
+                            src={img}
+                            alt={`${selectedVehicle.name} thumbnail ${
+                              index + 1
+                            }`}
+                            className="thumbnail-image"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+              </div>
+
+              <div className="lightbox-details">
+                <h2>{selectedVehicle.name}</h2>
+                <p className="lightbox-status">
+                  Status:{" "}
+                  <span
+                    className={`status-pill status-${selectedVehicle.status}`}
+                  >
+                    {selectedVehicle.status === "sold" ? "Sold" : "Available"}
+                  </span>
+                </p>
+                <p className="lightbox-mileage">
+                  {formatMileage(selectedVehicle.mileage)}
+                </p>
+                <p className="lightbox-price">
+                  Price: {formatPrice(selectedVehicle.price)}
+                </p>
+                <pre className="lightbox-description">
+{selectedVehicle.description}
+                </pre>
+              </div>
             </div>
           </div>
         </div>
       )}
+
+      <footer className="inventory-footer">
+        <div className="vehicle-counts">
+          <p>Total Vehicles: {totalVehicles}</p>
+          <p>Available: {availableCount}</p>
+          <p>Sold: {soldCount}</p>
+        </div>
+      </footer>
     </div>
   );
-};
+}
 
 export default App;
