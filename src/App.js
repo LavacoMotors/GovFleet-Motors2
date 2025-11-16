@@ -2,66 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 
 const vehicles = [
-  {
-    id: "silverado-2005",
-    name: "2005 Chevrolet Silverado 2500HD Utility Bed",
-    status: "sold",
-    details: "City Fleet Truck • 6.0L V8 • Tow Package • 165,000 miles",
-    description: `2005 Chevrolet Silverado 2500 HD - 165k Miles
-
-Clean Title 
-Passed Smog
-Current Registration 
-1 Owner
-Well Maintained 
-6.0L V8 Gasoline / Tow Package 
-Reliable Work Truck
-
-$5700`,
-    mileage: 165000,
-    price: 5700,
-    images: [
-      "/images/2005-chevrolet-silverado-2500HD/1.jpeg",
-      "/images/2005-chevrolet-silverado-2500HD/2.jpeg",
-      "/images/2005-chevrolet-silverado-2500HD/3.jpeg",
-      "/images/2005-chevrolet-silverado-2500HD/4.jpeg",
-      "/images/2005-chevrolet-silverado-2500HD/5.jpeg",
-      "/images/2005-chevrolet-silverado-2500HD/6.jpeg",
-      "/images/2005-chevrolet-silverado-2500HD/7.jpeg",
-      "/images/2005-chevrolet-silverado-2500HD/8.jpeg",
-      "/images/2005-chevrolet-silverado-2500HD/9.jpeg",
-    ],
-  },
-  {
-    id: "ambulance-2010",
-    name: "2010 Ford E-450 Ambulance",
-    status: "available",
-    details: "6.8L V10 • Dual Rear Wheels • Former City Fleet Ambulance",
-    description: `2010 Ford E-450 Ambulance
-
-Clean Title
-Passed Smog
-Current Registration
-
-Fleet Maintained
-Dual Rear Wheels
-Ready for Conversion or Service Use`,
-    mileage: 84000,
-    price: 0, // 0 = "Call for pricing" in the lightbox
-    images: [
-      "/images/2010-ford-e450-ambulance-84k/1.JPG",
-      "/images/2010-ford-e450-ambulance-84k/2.JPG",
-      "/images/2010-ford-e450-ambulance-84k/3.JPG",
-      "/images/2010-ford-e450-ambulance-84k/4.JPG",
-      "/images/2010-ford-e450-ambulance-84k/5.JPG",
-      "/images/2010-ford-e450-ambulance-84k/6.JPG",
-      "/images/2010-ford-e450-ambulance-84k/7.JPG",
-      "/images/2010-ford-e450-ambulance-84k/8.JPG",
-      "/images/2010-ford-e450-ambulance-84k/9.JPG",
-      "/images/2010-ford-e450-ambulance-84k/10.JPG",
-    ],
-  },
-
   // 2018 Explorer – 103k
   {
     id: "explorer-2018-103k",
@@ -131,13 +71,78 @@ $7,900`,
     ],
   },
 
+  // Ambulance – 84k **UPDATED ENGINE INFO**
+  {
+    id: "ambulance-2010",
+    name: "2010 Ford E-450 Ambulance",
+    status: "available",
+    details:
+      "6.0L PowerStroke Turbo Diesel • Dual Rear Wheels • Fleet Maintained • Ready for Conversion or Service",
+    description: `2010 Ford E-450 Ambulance
+
+Clean Title
+Passed Smog
+Current Registration
+
+Fleet Maintained
+6.0L PowerStroke Turbo Diesel
+Dual Rear Wheels
+Ready for Conversion or Service Use`,
+    mileage: 84000,
+    price: 0,
+    images: [
+      "/images/2010-ford-e450-ambulance-84k/1.JPG",
+      "/images/2010-ford-e450-ambulance-84k/2.JPG",
+      "/images/2010-ford-e450-ambulance-84k/3.JPG",
+      "/images/2010-ford-e450-ambulance-84k/4.JPG",
+      "/images/2010-ford-e450-ambulance-84k/5.JPG",
+      "/images/2010-ford-e450-ambulance-84k/6.JPG",
+      "/images/2010-ford-e450-ambulance-84k/7.JPG",
+      "/images/2010-ford-e450-ambulance-84k/8.JPG",
+      "/images/2010-ford-e450-ambulance-84k/9.JPG",
+      "/images/2010-ford-e450-ambulance-84k/10.JPG",
+    ],
+  },
+
+  // Silverado – SOLD
+  {
+    id: "silverado-2005",
+    name: "2005 Chevrolet Silverado 2500HD Utility Bed",
+    status: "sold",
+    details: "City Fleet Truck • 6.0L V8 • Tow Package • 165,000 miles",
+    description: `2005 Chevrolet Silverado 2500 HD - 165k Miles
+
+Clean Title 
+Passed Smog
+Current Registration 
+1 Owner
+Well Maintained 
+6.0L V8 Gasoline / Tow Package 
+Reliable Work Truck
+
+$5700`,
+    mileage: 165000,
+    price: 5700,
+    images: [
+      "/images/2005-chevrolet-silverado-2500HD/1.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/2.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/3.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/4.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/5.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/6.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/7.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/8.jpeg",
+      "/images/2005-chevrolet-silverado-2500HD/9.jpeg",
+    ],
+  },
+
   // PLACEHOLDERS
   {
     id: "placeholder-1",
     name: "Coming Soon – Government Fleet Vehicle",
     status: "available",
     details: "New inventory arriving soon • Government Fleet Maintained",
-    description: "New vehicle coming soon. Check back for photos and full details.",
+    description: "New vehicle loading soon.",
     mileage: 0,
     price: 0,
     images: [],
@@ -147,7 +152,7 @@ $7,900`,
     name: "Coming Soon – Government Fleet Vehicle",
     status: "available",
     details: "New inventory arriving soon • Government Fleet Maintained",
-    description: "New vehicle coming soon. Check back for photos and full details.",
+    description: "New vehicle loading soon.",
     mileage: 0,
     price: 0,
     images: [],
@@ -157,7 +162,7 @@ $7,900`,
     name: "Coming Soon – Government Fleet Vehicle",
     status: "available",
     details: "New inventory arriving soon • Government Fleet Maintained",
-    description: "New vehicle coming soon. Check back for photos and full details.",
+    description: "New vehicle loading soon.",
     mileage: 0,
     price: 0,
     images: [],
@@ -183,6 +188,12 @@ function App() {
   const availableCount = vehicles.filter((v) => v.status === "available").length;
   const soldCount = vehicles.filter((v) => v.status === "sold").length;
 
+  // sort so available vehicles always come first
+  const sortedVehicles = [...vehicles].sort((a, b) => {
+    if (a.status === b.status) return 0;
+    return a.status === "available" ? -1 : 1;
+  });
+
   const openVehicle = (vehicle) => {
     setSelectedVehicle(vehicle);
     setSelectedImageIndex(0);
@@ -196,7 +207,6 @@ function App() {
 
   const showPrevImage = (e) => {
     e.stopPropagation();
-    if (!selectedVehicle || !selectedVehicle.images?.length) return;
     setSelectedImageIndex((prev) =>
       prev === 0 ? selectedVehicle.images.length - 1 : prev - 1
     );
@@ -204,24 +214,18 @@ function App() {
 
   const showNextImage = (e) => {
     e.stopPropagation();
-    if (!selectedVehicle || !selectedVehicle.images?.length) return;
     setSelectedImageIndex((prev) =>
       prev === selectedVehicle.images.length - 1 ? 0 : prev + 1
     );
   };
 
-  // ESC to close, arrows to navigate
   useEffect(() => {
     if (!lightboxOpen) return;
 
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        closeLightbox();
-      } else if (e.key === "ArrowLeft") {
-        showPrevImage(e);
-      } else if (e.key === "ArrowRight") {
-        showNextImage(e);
-      }
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") showPrevImage(e);
+      if (e.key === "ArrowRight") showNextImage(e);
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -237,7 +241,7 @@ function App() {
 
       <main className="inventory-section">
         <div className="inventory-grid">
-          {vehicles.map((vehicle) => (
+          {sortedVehicles.map((vehicle) => (
             <div
               key={vehicle.id}
               className={`vehicle-card ${
@@ -246,7 +250,7 @@ function App() {
               onClick={() => openVehicle(vehicle)}
             >
               <div className="vehicle-image-wrapper">
-                {vehicle.images && vehicle.images.length > 0 && (
+                {!!vehicle.images?.length && (
                   <img
                     src={vehicle.images[0]}
                     alt={vehicle.name}
@@ -268,7 +272,6 @@ function App() {
                 <p className={`vehicle-status status-${vehicle.status}`}>
                   {vehicle.status === "sold" ? "Sold" : "Available"}
                 </p>
-                {/* Prices hidden on cards */}
               </div>
             </div>
           ))}
@@ -278,78 +281,45 @@ function App() {
       {lightboxOpen && selectedVehicle && (
         <div className="lightbox-overlay" onClick={closeLightbox}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <button className="lightbox-close" onClick={closeLightbox}>
-              ×
-            </button>
+            <button className="lightbox-close" onClick={closeLightbox}>×</button>
 
             <div className="lightbox-main">
               <div className="lightbox-image-section">
-                {selectedVehicle.images && selectedVehicle.images.length > 0 && (
-                  <div className="lightbox-image-wrapper">
-                    <button
-                      className="lightbox-arrow lightbox-arrow-left"
-                      onClick={showPrevImage}
-                    >
-                      ‹
-                    </button>
+                <div className="lightbox-image-wrapper">
+                  <button className="lightbox-arrow lightbox-arrow-left" onClick={showPrevImage}>‹</button>
+                  <img
+                    src={selectedVehicle.images[selectedImageIndex]}
+                    alt=""
+                    className="lightbox-image"
+                  />
+                  <button className="lightbox-arrow lightbox-arrow-right" onClick={showNextImage}>›</button>
+                </div>
 
-                    <img
-                      src={selectedVehicle.images[selectedImageIndex]}
-                      alt={`${selectedVehicle.name} - ${
-                        selectedImageIndex + 1
-                      }`}
-                      className="lightbox-image"
-                    />
-
-                    <button
-                      className="lightbox-arrow lightbox-arrow-right"
-                      onClick={showNextImage}
-                    >
-                      ›
-                    </button>
+                {selectedVehicle.images.length > 1 && (
+                  <div className="lightbox-thumbnails">
+                    {selectedVehicle.images.map((img, index) => (
+                      <button
+                        key={img}
+                        className={`thumbnail-button ${selectedImageIndex === index ? "active" : ""}`}
+                        onClick={() => setSelectedImageIndex(index)}
+                      >
+                        <img src={img} alt="" className="thumbnail-image" />
+                      </button>
+                    ))}
                   </div>
                 )}
-
-                {selectedVehicle.images &&
-                  selectedVehicle.images.length > 1 && (
-                    <div className="lightbox-thumbnails">
-                      {selectedVehicle.images.map((img, index) => (
-                        <button
-                          key={img + index}
-                          className={`thumbnail-button ${
-                            index === selectedImageIndex ? "active" : ""
-                          }`}
-                          onClick={() => setSelectedImageIndex(index)}
-                        >
-                          <img
-                            src={img}
-                            alt={`${selectedVehicle.name} thumbnail ${
-                              index + 1
-                            }`}
-                            className="thumbnail-image"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  )}
               </div>
 
               <div className="lightbox-details">
                 <h2>{selectedVehicle.name}</h2>
                 <p className="lightbox-status">
                   Status:{" "}
-                  <span
-                    className={`status-pill status-${selectedVehicle.status}`}
-                  >
+                  <span className={`status-pill status-${selectedVehicle.status}`}>
                     {selectedVehicle.status === "sold" ? "Sold" : "Available"}
                   </span>
                 </p>
-                <p className="lightbox-mileage">
-                  {formatMileage(selectedVehicle.mileage)}
-                </p>
-                <p className="lightbox-price">
-                  Price: {formatPrice(selectedVehicle.price)}
-                </p>
+                <p className="lightbox-mileage">{formatMileage(selectedVehicle.mileage)}</p>
+                <p className="lightbox-price">Price: {formatPrice(selectedVehicle.price)}</p>
                 <pre className="lightbox-description">
 {selectedVehicle.description}
                 </pre>
