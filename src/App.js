@@ -12,7 +12,7 @@ const App = () => {
       id: 1,
       name: "2005 Chevrolet Silverado 2500HD Utility Bed",
       status: "available",
-      details: "6.0L V8 • 4x4 • Utility Bed • 164,000 miles",
+      details: "6.0L V8 • 4x2 • City Fleet Truck • 164,000 miles",
       gallery: [
         "/images/2005-chevrolet-silverado-2500HD/1.jpeg",
         "/images/2005-chevrolet-silverado-2500HD/2.jpeg",
@@ -27,20 +27,50 @@ const App = () => {
     },
     {
       id: 2,
+      name: "2010 Ford E-450 Ambulance",
+      status: "available",
+      details: "Powerstroke Turbo Diesel • 84,000 miles • Former municipal ambulance",
+      price: "$13,500",
+      description: [
+        "Well-maintained former municipal ambulance, ready for its next chapter!",
+        "Whether you're outfitting for EMS, mobile service, overlanding, or a camper conversion, this is a clean, low-mileage rig with solid bones."
+      ],
+      features: [
+        "Powerstroke Turbo Diesel",
+        "Only 84,000 original miles",
+        "Clean title – one owner",
+        "Fleet-maintained – Southern California",
+        "Current registration",
+        "Fully functioning emergency equipment: lights, siren, air horn"
+      ],
+      gallery: [
+        "/images/2010-ford-e450-ambulance-84k/1.jpeg",
+        "/images/2010-ford-e450-ambulance-84k/2.jpeg",
+        "/images/2010-ford-e450-ambulance-84k/3.jpeg",
+        "/images/2010-ford-e450-ambulance-84k/4.jpeg",
+        "/images/2010-ford-e450-ambulance-84k/5.jpeg",
+        "/images/2010-ford-e450-ambulance-84k/6.jpeg",
+        "/images/2010-ford-e450-ambulance-84k/7.jpeg",
+        "/images/2010-ford-e450-ambulance-84k/8.jpeg",
+        "/images/2010-ford-e450-ambulance-84k/9.jpeg"
+      ]
+    },
+    {
+      id: 3,
       name: "Coming Soon",
       status: "available",
       details: "More government fleet vehicles arriving soon.",
       gallery: ["/preview.jpg"]
     },
     {
-      id: 3,
+      id: 4,
       name: "Coming Soon",
       status: "sold",
       details: "Sold - stay tuned for more inventory.",
       gallery: ["/preview.jpg"]
     },
     {
-      id: 4,
+      id: 5,
       name: "Coming Soon",
       status: "available",
       details: "Future fleet additions will appear here.",
@@ -220,7 +250,24 @@ const App = () => {
 
             <div className="lightbox-info">
               <h2>{selectedVehicle.name}</h2>
+              {selectedVehicle.price && (
+                <p className="lightbox-price">{selectedVehicle.price}</p>
+              )}
               <p>{selectedVehicle.details}</p>
+
+              {selectedVehicle.description &&
+                selectedVehicle.description.map((para, idx) => (
+                  <p key={idx}>{para}</p>
+                ))}
+
+              {selectedVehicle.features && (
+                <ul className="lightbox-features">
+                  {selectedVehicle.features.map((item, idx) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              )}
+
               {selectedVehicle.gallery &&
                 selectedVehicle.gallery.length > 1 && (
                   <p className="lightbox-counter">
