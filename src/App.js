@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
+const DEFAULT_IMAGE = "/preview.jpg";
+
 const vehicles = [
   // 2018 Explorer – 103k
   {
@@ -71,7 +73,7 @@ $7,900`,
     ],
   },
 
-  // Ambulance – 84k **UPDATED ENGINE INFO**
+  // Ambulance – 84k (correct engine)
   {
     id: "ambulance-2010",
     name: "2010 Ford E-450 Ambulance",
@@ -136,13 +138,13 @@ $5700`,
     ],
   },
 
-  // PLACEHOLDERS
+  // PLACEHOLDERS – no images array, will use DEFAULT_IMAGE
   {
     id: "placeholder-1",
     name: "Coming Soon – Government Fleet Vehicle",
     status: "available",
     details: "New inventory arriving soon • Government Fleet Maintained",
-    description: "New vehicle loading soon.",
+    description: "New vehicle coming soon. Check back for photos and full details.",
     mileage: 0,
     price: 0,
     images: [],
@@ -152,7 +154,7 @@ $5700`,
     name: "Coming Soon – Government Fleet Vehicle",
     status: "available",
     details: "New inventory arriving soon • Government Fleet Maintained",
-    description: "New vehicle loading soon.",
+    description: "New vehicle coming soon. Check back for photos and full details.",
     mileage: 0,
     price: 0,
     images: [],
@@ -162,7 +164,7 @@ $5700`,
     name: "Coming Soon – Government Fleet Vehicle",
     status: "available",
     details: "New inventory arriving soon • Government Fleet Maintained",
-    description: "New vehicle loading soon.",
+    description: "New vehicle coming soon. Check back for photos and full details.",
     mileage: 0,
     price: 0,
     images: [],
@@ -188,7 +190,7 @@ function App() {
   const availableCount = vehicles.filter((v) => v.status === "available").length;
   const soldCount = vehicles.filter((v) => v.status === "sold").length;
 
-  // sort so available vehicles always come first
+  // Available vehicles first
   const sortedVehicles = [...vehicles].sort((a, b) => {
     if (a.status === b.status) return 0;
     return a.status === "available" ? -1 : 1;
@@ -207,6 +209,12 @@ function App() {
 
   const showPrevImage = (e) => {
     e.stopPropagation();
+    if (
+      !selectedVehicle ||
+      !selectedVehicle.images ||
+      selectedVehicle.images.length <= 1
+    )
+      return;
     setSelectedImageIndex((prev) =>
       prev === 0 ? selectedVehicle.images.length - 1 : prev - 1
     );
@@ -214,6 +222,12 @@ function App() {
 
   const showNextImage = (e) => {
     e.stopPropagation();
+    if (
+      !selectedVehicle ||
+      !selectedVehicle.images ||
+      selectedVehicle.images.length <= 1
+    )
+      return;
     setSelectedImageIndex((prev) =>
       prev === selectedVehicle.images.length - 1 ? 0 : prev + 1
     );
@@ -231,6 +245,20 @@ function App() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxOpen, selectedVehicle]);
+
+  const getMainImage = (vehicle) => {
+    if (vehicle.images && vehicle.images.length > 0) {
+      return vehicle.images[0];
+    }
+    return DEFAULT_IMAGE;
+  };
+
+  const getLightboxImage = (vehicle, index) => {
+    if (vehicle.images && vehicle.images.length > 0) {
+      return vehicle.images[index];
+    }
+    return DEFAULT_IMAGE;
+  };
 
   return (
     <div className="app">
@@ -250,13 +278,11 @@ function App() {
               onClick={() => openVehicle(vehicle)}
             >
               <div className="vehicle-image-wrapper">
-                {!!vehicle.images?.length && (
-                  <img
-                    src={vehicle.images[0]}
-                    alt={vehicle.name}
-                    className="vehicle-image"
-                  />
-                )}
+                <img
+                  src={getMainImage(vehicle)}
+                  alt={vehicle.name}
+                  className="vehicle-image"
+                />
 
                 {vehicle.status === "sold" && (
                   <div className="sold-banner">SOLD</div>
@@ -281,45 +307,83 @@ function App() {
       {lightboxOpen && selectedVehicle && (
         <div className="lightbox-overlay" onClick={closeLightbox}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
-            <button className="lightbox-close" onClick={closeLightbox}>×</button>
+            <button className="lightbox-close" onClick={closeLightbox}>
+              ×
+            </button>
 
             <div className="lightbox-main">
               <div className="lightbox-image-section">
                 <div className="lightbox-image-wrapper">
-                  <button className="lightbox-arrow lightbox-arrow-left" onClick={showPrevImage}>‹</button>
+                  {selectedVehicle.images &&
+                    selectedVehicle.images.length > 1 && (
+                      <button
+                        className="lightbox-arrow lightbox-arrow-left"
+                        onClick={showPrevImage}
+                      >
+                        ‹
+                      </button>
+                    )}
+
                   <img
-                    src={selectedVehicle.images[selectedImageIndex]}
-                    alt=""
+                    src={getLightboxImage(
+                      selectedVehicle,
+                      selectedImageIndex
+                    )}
+                    alt={selectedVehicle.name}
                     className="lightbox-image"
                   />
-                  <button className="lightbox-arrow lightbox-arrow-right" onClick={showNextImage}>›</button>
+
+                  {selectedVehicle.images &&
+                    selectedVehicle.images.length > 1 && (
+                      <button
+                        className="lightbox-arrow lightbox-arrow-right"
+                        onClick={showNextImage}
+                      >
+                        ›
+                      </button>
+                    )}
                 </div>
 
-                {selectedVehicle.images.length > 1 && (
-                  <div className="lightbox-thumbnails">
-                    {selectedVehicle.images.map((img, index) => (
-                      <button
-                        key={img}
-                        className={`thumbnail-button ${selectedImageIndex === index ? "active" : ""}`}
-                        onClick={() => setSelectedImageIndex(index)}
-                      >
-                        <img src={img} alt="" className="thumbnail-image" />
-                      </button>
-                    ))}
-                  </div>
-                )}
+                {selectedVehicle.images &&
+                  selectedVehicle.images.length > 1 && (
+                    <div className="lightbox-thumbnails">
+                      {selectedVehicle.images.map((img, index) => (
+                        <button
+                          key={img + index}
+                          className={`thumbnail-button ${
+                            index === selectedImageIndex ? "active" : ""
+                          }`}
+                          onClick={() => setSelectedImageIndex(index)}
+                        >
+                          <img
+                            src={img}
+                            alt={`${selectedVehicle.name} thumbnail ${
+                              index + 1
+                            }`}
+                            className="thumbnail-image"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
               </div>
 
               <div className="lightbox-details">
                 <h2>{selectedVehicle.name}</h2>
                 <p className="lightbox-status">
                   Status:{" "}
-                  <span className={`status-pill status-${selectedVehicle.status}`}>
+                  <span
+                    className={`status-pill status-${selectedVehicle.status}`}
+                  >
                     {selectedVehicle.status === "sold" ? "Sold" : "Available"}
                   </span>
                 </p>
-                <p className="lightbox-mileage">{formatMileage(selectedVehicle.mileage)}</p>
-                <p className="lightbox-price">Price: {formatPrice(selectedVehicle.price)}</p>
+                <p className="lightbox-mileage">
+                  {formatMileage(selectedVehicle.mileage)}
+                </p>
+                <p className="lightbox-price">
+                  Price: {formatPrice(selectedVehicle.price)}
+                </p>
                 <pre className="lightbox-description">
 {selectedVehicle.description}
                 </pre>
