@@ -1,10 +1,13 @@
-/* Global layout */
+* {
+  box-sizing: border-box;
+}
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #0f172a; /* dark navy */
-  color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #050b1a;
+  color: #f5f5f5;
 }
 
 .app {
@@ -13,389 +16,525 @@ body {
   flex-direction: column;
 }
 
-/* Header */
+/* HEADER */
 
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  background: rgba(15, 23, 42, 0.9);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid #1f2937;
+.app-header {
+  background: #050b1a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px 16px 18px;
 }
 
-.header-inner {
-  max-width: 1120px;
+.app-header-inner {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0.75rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.brand-mark {
-  background-color: #1d4ed8;
-  color: #f9fafb;
-  font-weight: 800;
-  padding: 0.4rem 0.65rem;
-  border-radius: 0.5rem;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
-}
-
-.brand-text {
-  display: flex;
-  flex-direction: column;
-}
-
-.brand-name {
+.app-header h1 {
+  margin: 0 0 4px 0;
+  font-size: 26px;
   font-weight: 700;
-  font-size: 1.05rem;
-  color: #f9fafb;
 }
 
-.brand-tagline {
-  font-size: 0.78rem;
-  color: #9ca3af;
+.app-header p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
 }
 
-.header-contact {
-  text-align: right;
-  font-size: 0.8rem;
-  color: #d1d5db;
+.app-header-contact {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #c1c7d7;
 }
 
-.header-phone {
-  font-weight: 600;
-  display: block;
-}
-
-.header-city {
-  font-size: 0.75rem;
-  color: #9ca3af;
-}
-
-/* Hero */
-
-.hero {
-  background-image: linear-gradient(
-      to right,
-      rgba(15, 23, 42, 0.95),
-      rgba(15, 23, 42, 0.9)
-    ),
-    radial-gradient(circle at top left, #1d4ed8 0, transparent 55%);
-  padding: 3.5rem 1.5rem 3rem;
-}
-
-.hero-content {
-  max-width: 1120px;
-  margin: 0 auto;
-}
-
-.hero h1 {
-  font-size: 2.1rem;
-  margin: 0 0 0.8rem;
-  color: #f9fafb;
-}
-
-.hero p {
-  margin: 0 0 1.5rem;
-  max-width: 640px;
-  color: #d1d5db;
-  font-size: 0.98rem;
-}
-
-.hero-actions {
+.header-actions {
   display: flex;
-  gap: 0.75rem;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-.primary-btn {
-  border: none;
-  background: linear-gradient(to right, #1d4ed8, #2563eb);
-  color: #f9fafb;
-  padding: 0.55rem 1.4rem;
+/* BUTTONS */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
   border-radius: 999px;
+  font-size: 14px;
   font-weight: 600;
+  text-decoration: none;
+  border: none;
   cursor: pointer;
-  font-size: 0.9rem;
-  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.35);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: #039be5;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #0288d1;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #039be5;
+  border: 1px solid #039be5;
+}
+
+.btn-secondary:hover {
+  background: rgba(3, 155, 229, 0.1);
+}
+
+/* MAIN SECTIONS */
+
+main {
+  flex: 1;
+}
+
+.section-title {
+  font-size: 20px;
+  margin: 0 0 16px 0;
+}
+
+/* INVENTORY SECTION */
+
+.inventory-section {
+  max-width: 1200px;
+  width: 100%;
+  margin: 24px auto 40px;
+  padding: 0 16px;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.vehicle-card {
+  background: #071025;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease,
     background 0.15s ease;
 }
 
-.primary-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.45);
-}
-
-.primary-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.4);
-}
-
-/* Inventory section */
-
-.inventory-section {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem 3rem;
-}
-
-.section-header h2 {
-  margin: 0;
-  font-size: 1.4rem;
-  color: #e5e7eb;
-}
-
-.section-header p {
-  margin: 0.4rem 0 1.6rem;
-  color: #9ca3af;
-  font-size: 0.9rem;
-}
-
-.section-sub {
-  color: #cbd5f5;
-}
-
-/* Grid */
-
-.inventory-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.4rem;
-}
-
-.vehicle-card {
-  background: #020617;
-  border-radius: 1rem;
-  overflow: hidden;
-  border: 1px solid #1f2937;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease,
-    border-color 0.18s ease;
-}
-
 .vehicle-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
-  border-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6);
+  background: #0b162f;
 }
 
-.image-wrapper {
+.vehicle-card-sold {
+  opacity: 0.85;
+}
+
+.vehicle-image-wrapper {
   position: relative;
-  background: #111827;
+  height: 210px;
+  overflow: hidden;
 }
 
-.vehicle-card img {
+.vehicle-image {
   width: 100%;
-  height: 190px;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.sold-overlay {
+/* SOLD ribbon */
+
+.sold-banner {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background-color: rgba(220, 38, 38, 0.96);
-  color: #f9fafb;
+  left: 0;
+  top: 12px;
+  background: #c62828;
+  color: #fff;
+  font-size: 13px;
   font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  border-radius: 0 999px 999px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
-.card-body {
-  padding: 0.85rem 1rem 1rem;
+/* Vehicle info */
+
+.vehicle-info {
+  padding: 14px 16px 16px;
 }
 
-.card-body h3 {
-  margin: 0 0 0.4rem;
-  font-size: 1rem;
-  color: #e5e7eb;
+.vehicle-name {
+  margin: 0 0 6px 0;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.card-body p {
+.vehicle-details {
+  margin: 0 0 6px 0;
+  font-size: 13px;
+  color: #c1c7d7;
+}
+
+.vehicle-mileage {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+}
+
+.vehicle-status {
   margin: 0;
-  font-size: 0.86rem;
-  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-/* Footer */
-
-.site-footer {
-  margin-top: auto;
-  border-top: 1px solid #1f2937;
-  background-color: #020617;
+.status-available {
+  color: #4caf50;
 }
 
-.footer-inner {
-  max-width: 1120px;
+.status-sold {
+  color: #ff5252;
+}
+
+/* COMING SOON SECTION */
+
+.coming-soon-section {
+  margin-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 20px;
+}
+
+.coming-soon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.coming-soon-card {
+  background: #071025;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.coming-soon-image-wrapper {
+  height: 120px;
+  overflow: hidden;
+}
+
+.coming-soon-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coming-soon-info {
+  padding: 10px 12px 12px;
+  font-size: 13px;
+}
+
+.coming-soon-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+}
+
+.coming-soon-label {
+  margin: 4px 0 0 0;
+  font-weight: 600;
+  color: #ffb300;
+}
+
+/* GENERIC SECTION WRAPPER */
+
+.section-inner {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 1.5rem 1.4rem;
-  text-align: center;
-  font-size: 0.82rem;
-  color: #9ca3af;
+  padding: 0 16px;
 }
 
-.footer-note {
-  margin-top: 0.3rem;
-  font-size: 0.78rem;
-  color: #6b7280;
+/* ABOUT SECTION */
+
+.about-section {
+  padding: 32px 0;
+  background: #040816;
 }
 
-/* Lightbox */
+.about-section h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.about-section p {
+  font-size: 14px;
+  margin: 6px 0;
+  color: #d0d4e4;
+}
+
+/* CONTACT SECTION */
+
+.contact-section {
+  padding: 32px 0;
+  background: #071025;
+}
+
+.contact-section h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.contact-section p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.contact-buttons {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* MAP SECTION */
+
+.map-section {
+  padding: 32px 0 40px;
+  background: #050b1a;
+}
+
+.map-section h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.map-section p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #c1c7d7;
+}
+
+.map-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  height: 320px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.map-wrapper iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* LIGHTBOX */
 
 .lightbox-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.94);
+  background: rgba(5, 11, 26, 0.92);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 30;
+  justify-content: center;
+  z-index: 999;
 }
 
 .lightbox-content {
-  position: relative;
-  background: #020617;
-  padding: 1rem;
-  border-radius: 1rem;
-  max-width: 900px;
-  width: 90%;
+  max-width: 1100px;
+  width: 100%;
   max-height: 90vh;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
-  text-align: center;
-  border: 1px solid #1f2937;
+  background: #050b1a;
+  border-radius: 18px;
+  padding: 16px 18px 18px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+}
+
+.lightbox-close {
+  align-self: flex-end;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.lightbox-main {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.lightbox-image-section {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lightbox-image-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .lightbox-image {
   width: 100%;
-  height: auto;
-  max-height: 60vh;
-  border-radius: 0.75rem;
-  object-fit: contain;
-  background-color: #020617;
+  height: 360px;
+  object-fit: cover;
+  display: block;
 }
 
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  background: #111827;
-  color: #f9fafb;
-  border: none;
-  font-size: 1.1rem;
-  padding: 4px 9px;
-  border-radius: 999px;
-  cursor: pointer;
-}
-
-.nav-arrow {
+.lightbox-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: #1d4ed8;
-  color: white;
   border: none;
-  font-size: 1.3rem;
-  border-radius: 999px;
+  background: rgba(3, 155, 229, 0.9);
+  color: #fff;
+  font-size: 26px;
   width: 34px;
   height: 34px;
+  border-radius: 999px;
   cursor: pointer;
 }
 
-.nav-arrow.left {
-  left: -18px;
+.lightbox-arrow-left {
+  left: 10px;
 }
 
-.nav-arrow.right {
-  right: -18px;
+.lightbox-arrow-right {
+  right: 10px;
 }
 
-.lightbox-info {
-  margin-top: 0.9rem;
+.lightbox-thumbnails {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
 }
 
-.lightbox-info h2 {
-  margin: 0 0 0.3rem;
-  font-size: 1.1rem;
-  color: #e5e7eb;
+.thumbnail-button {
+  border: none;
+  padding: 0;
+  background: transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 60px;
+  height: 46px;
+  cursor: pointer;
+  opacity: 0.65;
 }
 
-.lightbox-info p {
-  margin: 0.2rem 0;
-  font-size: 0.86rem;
-  color: #9ca3af;
+.thumbnail-button.active {
+  outline: 2px solid #039be5;
+  opacity: 1;
 }
 
-/* Lightbox price + features */
+.thumbnail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-.lightbox-price {
-  margin: 0.25rem 0 0.6rem;
+/* Lightbox details */
+
+.lightbox-details {
+  flex: 2;
+  font-size: 14px;
+}
+
+.lightbox-details h2 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+}
+
+.lightbox-status {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
   font-weight: 600;
-  color: #fbbf24; /* gold-ish price highlight */
 }
 
-.lightbox-features {
-  list-style: none;
-  padding-left: 0;
-  margin: 0.5rem 0 0.6rem;
-  font-size: 0.84rem;
-  color: #e5e7eb;
-  text-align: left;
+.status-available {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
 }
 
-.lightbox-features li {
-  margin-bottom: 0.15rem;
+.status-sold {
+  background: rgba(255, 82, 82, 0.1);
+  color: #ff5252;
 }
 
-.lightbox-features li::before {
-  content: "• ";
-  color: #60a5fa;
+.lightbox-mileage,
+.lightbox-price {
+  margin: 2px 0;
 }
 
-.lightbox-counter {
-  margin-top: 0.4rem;
-  font-size: 0.78rem;
-  color: #9ca3af;
+.lightbox-description {
+  margin-top: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  white-space: pre-wrap;
 }
 
-/* Responsive tweaks */
+/* FOOTER */
 
-@media (max-width: 768px) {
-  .header-inner {
+.inventory-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 16px 16px;
+  background: #050b1a;
+}
+
+.vehicle-counts {
+  max-width: 1200px;
+  margin: 0 auto;
+  font-size: 13px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 18px;
+  color: #c1c7d7;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .app-header-inner {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.4rem;
   }
 
-  .hero {
-    padding: 2.5rem 1.25rem 2.4rem;
+  .lightbox-main {
+    flex-direction: column;
   }
 
-  .hero h1 {
-    font-size: 1.6rem;
+  .lightbox-image {
+    height: 260px;
   }
 
-  .inventory-section {
-    padding: 2rem 1.25rem 2.5rem;
+  .vehicle-counts {
+    flex-direction: column;
+    gap: 4px;
   }
 
-  .nav-arrow.left {
-    left: 6px;
-  }
-
-  .nav-arrow.right {
-    right: 6px;
+  .map-wrapper {
+    height: 260px;
   }
 }
